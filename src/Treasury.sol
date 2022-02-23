@@ -48,15 +48,15 @@ contract Treasury is Ownable {
     }
 
     function authorise(address addr) external onlyAuth {
-        require(!authorised[addr], "AUTHORISED");
+        require(!authorised[addr], "UNAUTHORISED");
         authorised[addr] = true;
         emit Authorised(addr);
     }
 
     function unauthorise(address addr) external onlyAuth {
-        require(!authorised[addr], "UNAUTHORISED");
+        require(authorised[addr], "AUTHORISED");
         authorised[addr] = false;
-        emit Authorised(addr);
+        emit Unauthorised(addr);
     }
 
     function erc20Recover(IERC20 token, address to, uint256 amount) external onlyAuth {
