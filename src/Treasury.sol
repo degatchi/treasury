@@ -47,13 +47,13 @@ contract Treasury is Ownable {
         selfdestruct(payable(msg.sender));
     }
 
-    function authorise(address addr) external {
+    function authorise(address addr) external onlyAuth {
         require(!authorised[addr], "AUTHORISED");
         authorised[addr] = true;
         emit Authorised(addr);
     }
 
-    function unauthorise(address addr) external {
+    function unauthorise(address addr) external onlyAuth {
         require(!authorised[addr], "UNAUTHORISED");
         authorised[addr] = false;
         emit Authorised(addr);
